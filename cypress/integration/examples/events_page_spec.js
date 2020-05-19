@@ -4,33 +4,31 @@ describe('Checking the Events', () => {
         cy.get('.res-events').as('eventList');
     })
 
-    //To get the date from the string
-    function getNewDate(eventDate) {
-        let str1 = eventDate.substring(0, eventDate.indexOf('|')).replace(/\s/g, '').replace(".", ",").toLowerCase();
-        let splitDate = str1.split(',');
-        const minDay, maxDay, minDate = '', maxDate = '';
-        if (!str && str1 !== '' && splitDate.length > 2) {
-            if (str1.includes("-")) { 
-                let str3 = str1.split(",")[1].split('-');
-                if(str3.length > 1){
-                    minDay = Math.min(...str3);
-                    maxDay = Math.max(...str3);                   
+    /*To get the date from the string*/
+    const getNewDate = (eventDate) => {
+        let trimDate = eventDate.substring(0, eventDate.indexOf('|')).replace(/\s/g, '').replace(".", ",").toLowerCase();
+        let splitDate = trimDate.split(',');
+        let minDay, maxDay, minDate, maxDate = '';
+        if (!trimDate && trimDate.trim() !=="" && splitDate.length>2) {
+            if (trimDate.includes("-")) { 
+                let formattedDate = trimDate.split(",")[1].split('-');
+                if(formattedDate.length > 1){
+                    minDay = Math.min(...formattedDate);
+                    maxDay = Math.max(...formattedDate);                   
                 }
-                let eventNewDate = new Date(str1),
+                const eventNewDate = new Date(trimDate),
                     eventMonth = eventNewDate.getMonth() + 1,
                     eventMontYear = splitDate[splitDate.length-1]+','+eventMonth;
-                if(minDay ==! undefined && maxDay !== undefined){
+                if(!minDay && !maxDay){
                     minDate = eventMontYear+','+minDay
                     maxDate = eventMontYear+','+maxDay
                 }                
-                return {minDate, maxDate};
             }
-        } else {
-            return {minDate, maxDate};
-        }       
+        } 
+        return {minDate, maxDate};
     }
      
-    //To get the current date
+    /*To get the current date*/
     let date  = new Date(),
         year = date.getFullYear(),
         month = date.getMonth(),
