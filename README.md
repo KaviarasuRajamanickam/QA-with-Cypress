@@ -4,16 +4,15 @@ Automate the website [Hobsons.com](https://www.hobsons.com/) with some test case
 
 ## Test Cases
 
-- 1. Hobsons.com home page renders as expected.
+- Hobsons.com home page renders as expected.
 
-- 2. On the home screen there is a Hero graphic with the text "We help students across the journey of a lifetime." Click the down arrow. Assert the page scrolls the next sections "How can we help your students?" into the viewport window. Assert that it is correctly aligned with the top of the visible screen
+- On the home screen there is a Hero graphic with the text "We help students across the journey of a lifetime." Click the down arrow. Assert the page scrolls the next sections "How can we help your students?" into the viewport window. Assert that it is correctly aligned with the top of the visible screen
 
-- 3. When user clicks the "hamburger" menu at the top of the screen then the items the list drops down as expected with the sub-menu items. The menu I'm referring to is Solutions, Services, Resources, About & Blog. Assert that the "Resources" menus contain a list of child links including "Events".
+- When user clicks the "hamburger" menu at the top of the screen then the items the list drops down as expected with the sub-menu items. The menu I'm referring to is Solutions, Services, Resources, About & Blog. Assert that the "Resources" menus contain a list of child links including "Events".
 
-- 4. Navigate to Resources > Events. Assert all events on the page that occur in the future. Note you do NOT need to apply the filters, just assert on the default list that is displayed. Also note that you need only assert on events which have specified a day, month and year
+- Navigate to Resources > Events. Assert all events on the page that occur in the future. Note you do NOT need to apply the filters, just assert on the default list that is displayed. Also note that you need only assert on events which have specified a day, month and year
 
-## Running the tests
-
+## Tests covered
 ### Home_page_spec.js
 
 - Assert the page successfully loads, contains correct title
