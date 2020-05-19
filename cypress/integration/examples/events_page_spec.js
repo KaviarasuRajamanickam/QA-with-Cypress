@@ -8,24 +8,26 @@ describe('Checking the Events', () => {
     function getNewDate(eventDate) {
         let str1 = eventDate.substring(0, eventDate.indexOf('|')).replace(/\s/g, '').replace(".", ",").toLowerCase();
         let splitDate = str1.split(',');
-        let minDay, maxDay, minDate, maxDate;
-        if (str1 !== null && str1 !== '' && str1 !== undefined && str1 !== NaN && splitDate.length > 2) {
-            if (str1.includes("-")) {
-                var str2 = str1.split(",");                
-                let str3 = str2[1].split('-');                
+        const minDay, maxDay, minDate = '', maxDate = '';
+        if (!str && str1 !== '' && splitDate.length > 2) {
+            if (str1.includes("-")) { 
+                let str3 = str1.split(",")[1].split('-');
                 if(str3.length > 1){
-                    for(let i = 0; i< str3.length; i++){                    
-                        minDay = Math.min(...str3);
-                        maxDay = Math.max(...str3);                   
-                    }
+                    minDay = Math.min(...str3);
+                    maxDay = Math.max(...str3);                   
                 }
-                var eventNewDate = new Date(str1);
-                var eventMonth = eventNewDate.getMonth() + 1;
-                minDate = splitDate[splitDate.length-1]+','+eventMonth+','+minDay
-                maxDate = splitDate[splitDate.length-1]+','+eventMonth+','+maxDay
+                let eventNewDate = new Date(str1),
+                    eventMonth = eventNewDate.getMonth() + 1,
+                    eventMontYear = splitDate[splitDate.length-1]+','+eventMonth;
+                if(minDay ==! undefined && maxDay !== undefined){
+                    minDate = eventMontYear+','+minDay
+                    maxDate = eventMontYear+','+maxDay
+                }                
                 return {minDate, maxDate};
             }
-        }        
+        } else {
+            return {minDate, maxDate};
+        }       
     }
      
     //To get the current date
