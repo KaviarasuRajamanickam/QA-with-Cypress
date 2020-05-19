@@ -9,20 +9,20 @@ describe('Checking the Events', () => {
         let trimDate = eventDate.substring(0, eventDate.indexOf('|')).replace(/\s/g, '').replace(".", ",").toLowerCase();
         let splitDate = trimDate.split(',');
         let minDay, maxDay, minDate, maxDate = '';
-        if (!trimDate && trimDate.trim() !=="" && splitDate.length>2) {
-            if (trimDate.includes("-")) { 
+        if (trimDate && trimDate.trim() !== "" && splitDate.length>2) {
+            if (trimDate.includes("-")) {
                 let formattedDate = trimDate.split(",")[1].split('-');
                 if(formattedDate.length > 1){
                     minDay = Math.min(...formattedDate);
-                    maxDay = Math.max(...formattedDate);                   
+                    maxDay = Math.max(...formattedDate);   
                 }
                 const eventNewDate = new Date(trimDate),
                     eventMonth = eventNewDate.getMonth() + 1,
                     eventMontYear = splitDate[splitDate.length-1]+','+eventMonth;
-                if(!minDay && !maxDay){
+                if(minDay && maxDay){
                     minDate = eventMontYear+','+minDay
                     maxDate = eventMontYear+','+maxDay
-                }                
+                }             
             }
         } 
         return {minDate, maxDate};
@@ -38,11 +38,14 @@ describe('Checking the Events', () => {
     it('Make sure the events should have the future date', () => {
         cy.get('@eventList')
             .each(($ele) => {
-                let texts = $ele.map((i, el) => {
-                    return getNewDate(Cypress.$(el).find('.txt > p > small').text())
+                let texts = $ele.map((i, el) => { 
+                    if(Cypress.$(el).find('.txt > p > small').text() !== undefined){
+                        return getNewDate(Cypress.$(el).find('.txt > p > small').text())
+                    }                    
                 })
-                expect(new Date(texts.maxDate)).to.be.greaterThan(currDate);     
-                // expect(new Date('2021,5,2')).to.be.greaterThan(currDate);// To test static, since the event date doesn't match with the current date  
+                if(texts[0].maxDate !== undefined && texts[0].maxDate !== '') {
+                    expect(new Date(texts[0].maxDate)).to.be.greaterThan(currDate);    
+                }
             })
     })
 })
