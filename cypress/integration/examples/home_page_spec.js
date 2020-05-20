@@ -12,11 +12,11 @@ describe('The Home page', () => {
     const primaryNav = ['Solutions', 'Services', 'Resources', 'About', 'Blog'];
     const secondaryNav = ['All', 'Webinars', 'Events', 'Case Studies', 'White Papers', 'Blog', 'Media', 'Podcast'];
 
-    it('successfully loads, contains correct title', function () {
+    it('Assert the page loads successfully with correct title', function () {
         cy.title().should('be.equal', 'Education Advances | Hobsons');
     });
 
-    it('ensure that no image failed to load', () => {
+    it('Ensure that all images load without failing', () => {
         cy.get('img').each((img) => {
             try {
                 expect(img[0].naturalWidth).to.not.equal(0);
@@ -26,17 +26,17 @@ describe('The Home page', () => {
         })
     });
 
-    it('has a visible logo', function () {
+    it('Assert the logo should be visible', function () {
         cy.get('@logo')
             .should('be.visible')
             .and('have.css', 'background-image', 'url("https://www.hobsons.com/ui/svg/logo-hobsons-tagline.svg")');
     });
 
-    it('contains the correct page title', () => {
+    it('Ensure the page title to be expected', () => {
         cy.get('h1').should('contain', 'We help students across the journey of a lifetime.');
     });
 
-    it('Check the page scroll to correct viewport', () => {
+    it('Check the page scroll to correct position at specific viewport', () => {
         cy.viewport(1366, 768);
 
         cy.get('.home-more').click();
@@ -51,7 +51,7 @@ describe('The Home page', () => {
 
     });
 
-    it('Expect the list of drop downs on clicking the humberger menu', () => {
+    it('Expect the list of drop downs are available on clicking the hamburger menu', () => {
         cy.get('@nav')
             .should('not.be.visible')
             .and('not.have.class', 'visible');
@@ -102,7 +102,7 @@ describe('The Home page', () => {
 
     });
 
-    it('Navigate to Events page on clicking the navigation', () => {
+    it('Navigate to the expected page on clicking the navigation', () => {
         cy.get('@menu')
             .and('not.have.class', 'active')
             .click();

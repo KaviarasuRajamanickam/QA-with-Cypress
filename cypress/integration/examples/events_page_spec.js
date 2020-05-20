@@ -33,7 +33,7 @@ describe('Checking the Events', () => {
     let date  = new Date(),
     currDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1);
     
-    it('Make sure the events should have the future date', () => {
+    it('Make sure the events with the future date are asserted', () => {
         cy.get('@eventList')
         .each(($ele, i) => {
             const eventTitle = Cypress.$($ele).find('.txt > h4 > a').text();

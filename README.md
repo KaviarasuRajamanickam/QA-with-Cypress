@@ -1,35 +1,35 @@
 # Cypress Automation
 
-Automate the website [Hobsons.com](https://www.hobsons.com/) with some test case 
+Automated test cases for website [Hobsons.com](https://www.hobsons.com/)
 
 ## Test Cases
 
-- Hobsons.com home page renders as expected.
+- Assert that [Hobsons.com](https://hobsons.com/) renders as expected.
 
-- On the home screen there is a Hero graphic with the text "We help students across the journey of a lifetime." Click the down arrow. Assert the page scrolls the next sections "How can we help your students?" into the viewport window. Assert that it is correctly aligned with the top of the visible screen
+- Assert that clicking the arrow in the Hero graphic image on the home screen scrolls the page to the appropriate section into the viewport window aligned with the top of the visible screen.
 
-- When user clicks the "hamburger" menu at the top of the screen then the items the list drops down as expected with the sub-menu items. The menu I'm referring to is Solutions, Services, Resources, About & Blog. Assert that the "Resources" menus contain a list of child links including "Events".
+- Assert that all links are available in the "hamburger" menu and children links are available under "Resources" menu.
 
-- Navigate to Resources > Events. Assert all events on the page that occur in the future. Note you do NOT need to apply the filters, just assert on the default list that is displayed. Also note that you need only assert on events which have specified a day, month and year
+- Assert all events on the page "Resources > Events", that will occur in future with dates specified in units of day, month and year.
 
 ## Tests covered
 ### Home_page_spec.js
 
-- Assert the page successfully loads, contains correct title
-- Ensure that no image failed to load
+- Assert the page loads successfully with correct title
+- Ensure that all images load without failing
 - Assert the logo should be visible
-- Ensure the page title should be expected
-- Check the page scroll to right position at specific viewport
-- Expect the list of drop downs are available on clicking the humberger menu
+- Ensure the page title to be expected
+- Check the page scroll to correct position at specific viewport
+- Expect the list of drop downs are available on clicking the hamburger menu
 - Navigate to the expected page on clicking the navigation
 
 ```shell
 describe('The Home page', () => {
-    it('ensure that no image failed to load', () => {
+    it('Ensure that all images load without failing', () => {
         cy.get('img').each((img) => expect(img[0].naturalWidth).to.not.equal(0))
     })
 
-    it('Navigate to Events page on clicking the navigation', () => {
+    it('Navigate to the expected page on clicking the navigation', () => {
         cy.get('@menu')
             .and('not.have.class', 'active')
             .click();
@@ -53,7 +53,7 @@ describe('The Home page', () => {
 
 ### events_page_spec.js
 
-- Make sure the events should have the future date
+- Make sure the events with the future date are asserted
 
 ```shell
 describe('Checking the Events', () => {
@@ -62,7 +62,7 @@ describe('Checking the Events', () => {
         cy.get('.res-events').as('eventList');
     })
 
-    it('Make sure the events should have the future date', () => {
+    it('Make sure the events with the future date are asserted', () => {
         cy.get('@eventList')
             .each(($ele) => {
                 let texts = $ele.map((i, el) => {
