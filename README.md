@@ -81,13 +81,13 @@ describe('Checking the Events', () => {
             })
             if (texts[0].maxDate.trim() !== '') {
                 try {
-                    expect(new Date(texts[0].maxDate), i+'- '+eventTitle).to.be.greaterThan(currDate); 
+                    expect(new Date(texts[0].maxDate), i + '- ' + eventTitle).to.be.greaterThan(currDate); 
                 } catch (error) {
                     eventStatus = false;                             
                     cy.log(error.message);
                 }
             } else {
-                cy.log(i+' - '+eventTitle+' - event date doesn\'t match with the formatted date')
+                cy.log(i + ' - ' + eventTitle + ' - event date doesn\'t match with the formatted date')
             }     
         })
         .then(() => {

@@ -19,10 +19,10 @@ describe('Checking the Events', () => {
                     maxDay = Math.max(...formattedDate);   
                 }
                 const eventNewDate = new Date(trimDate),
-                    eventMontYear = splitDate[splitDate.length-1]+','+(eventNewDate.getMonth()+1);
+                    eventMontYear = splitDate[splitDate.length-1] + ',' + (eventNewDate.getMonth() + 1);
                 if (minDay && maxDay) {
-                    minDate = eventMontYear+','+minDay
-                    maxDate = eventMontYear+','+maxDay
+                    minDate = eventMontYear + ',' + minDay
+                    maxDate = eventMontYear + ',' + maxDay
                 }             
             }
         } 
@@ -31,7 +31,7 @@ describe('Checking the Events', () => {
     
     /*To get the current date*/
     let date  = new Date(),
-    currDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1),
+    currDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
     eventStatus = true;
 
     it('Make sure the events with the future date are asserted', () => {
@@ -43,13 +43,13 @@ describe('Checking the Events', () => {
             })
             if (texts[0].maxDate.trim() !== '') {
                 try {
-                    expect(new Date(texts[0].maxDate), i+'- '+eventTitle).to.be.greaterThan(currDate); 
+                    expect(new Date(texts[0].maxDate), i + '- ' + eventTitle).to.be.greaterThan(currDate); 
                 } catch (error) {
                     eventStatus = false;                             
                     cy.log(error.message);
                 }
             } else {
-                cy.log(i+' - '+eventTitle+' - event date doesn\'t match with the formatted date')
+                cy.log(i + ' - ' + eventTitle + ' - event date doesn\'t match with the formatted date')
             }     
         })
         .then(() => {
