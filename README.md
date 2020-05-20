@@ -25,9 +25,19 @@ Automated test cases for website [Hobsons.com](https://www.hobsons.com/)
 
 ```shell
 describe('The Home page', () => {
+    let imageStatus = true;
     it('Ensure that all images load without failing', () => {
-        cy.get('img').each((img) => expect(img[0].naturalWidth).to.not.equal(0))
-    })
+        cy.get('img').each((img) => {
+            try {
+                expect(img[0].naturalWidth).to.not.equal(0)
+            } catch (error) {
+                imageStatus = false;                             
+            }
+        })
+        .then(() => {
+            expect(imageStatus).to.be.equal(true);
+        })
+    });
 
     it('Navigate to the expected page on clicking the links', () => {
         cy.get('@menu')
@@ -64,12 +74,25 @@ describe('Checking the Events', () => {
 
     it('Make sure the events with the future date are asserted', () => {
         cy.get('@eventList')
-            .each(($ele) => {
-                let texts = $ele.map((i, el) => {
-                    return getNewDate(Cypress.$(el).find('.txt > p > small').text())
-                })
-                expect(new Date(texts.maxDate)).to.be.greaterThan(currDate);  
+        .each(($ele, i) => {
+            const eventTitle = Cypress.$($ele).find('.txt > h4 > a').text();
+            const texts = $ele.map((i, el) => {
+                return getNewDate(Cypress.$(el).find('.txt > p > small').text())
             })
+            if (texts[0].maxDate.trim() !== '') {
+                try {
+                    expect(new Date(texts[0].maxDate), i+'- '+eventTitle).to.be.greaterThan(currDate); 
+                } catch (error) {
+                    eventStatus = false;                             
+                    cy.log(error.message);
+                }
+            } else {
+                cy.log(i+' - '+eventTitle+' - event date doesn\'t match with the formatted date')
+            }     
+        })
+        .then(() => {
+            expect(eventStatus).to.be.equal(true);
+        })
     })
 )}
 ```
