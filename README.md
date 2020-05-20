@@ -21,7 +21,7 @@ Automated test cases for website [Hobsons.com](https://www.hobsons.com/)
 - Ensure the page title to be expected
 - Check the page scroll to correct position at specific viewport
 - Expect the list of drop downs are available on clicking the hamburger menu
-- Navigate to the expected page on clicking the navigation
+- Navigate to the expected page on clicking the links
 
 ```shell
 describe('The Home page', () => {
@@ -29,7 +29,7 @@ describe('The Home page', () => {
         cy.get('img').each((img) => expect(img[0].naturalWidth).to.not.equal(0))
     })
 
-    it('Navigate to the expected page on clicking the navigation', () => {
+    it('Navigate to the expected page on clicking the links', () => {
         cy.get('@menu')
             .and('not.have.class', 'active')
             .click();

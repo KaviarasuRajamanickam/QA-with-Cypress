@@ -6,7 +6,7 @@ describe('Checking the Events', () => {
         cy.get('.res-events').as('eventList');
     })
 
-    /*To get the date from the string*/
+    /*To get the event date from the string*/
     const getNewDate = (eventDate) => {
         let trimDate = eventDate.substring(0, eventDate.indexOf('|')).replace(/\s/g, '').replace('.', ',').toLowerCase();
         let splitDate = trimDate.split(',');
@@ -31,8 +31,9 @@ describe('Checking the Events', () => {
     
     /*To get the current date*/
     let date  = new Date(),
-    currDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1);
-    
+    currDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1),
+    eventStatus = true;
+
     it('Make sure the events with the future date are asserted', () => {
         cy.get('@eventList')
         .each(($ele, i) => {
@@ -44,11 +45,15 @@ describe('Checking the Events', () => {
                 try {
                     expect(new Date(texts[0].maxDate), i+'- '+eventTitle).to.be.greaterThan(currDate); 
                 } catch (error) {
+                    eventStatus = false;                             
                     cy.log(error.message);
                 }
             } else {
                 cy.log(i+' - '+eventTitle+' - event date doesn\'t match with the formatted date')
             }     
+        })
+        .then(() => {
+            expect(eventStatus).to.be.equal(true);
         })
     })
 })

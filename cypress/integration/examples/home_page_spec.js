@@ -16,13 +16,17 @@ describe('The Home page', () => {
         cy.title().should('be.equal', 'Education Advances | Hobsons');
     });
 
+    let imageStatus = true;
     it('Ensure that all images load without failing', () => {
         cy.get('img').each((img) => {
             try {
-                expect(img[0].naturalWidth).to.not.equal(0);
+                expect(img[0].naturalWidth).to.not.equal(0)
             } catch (error) {
-                cy.log(error.message);
+                imageStatus = false;                             
             }
+        })
+        .then(() => {
+            expect(imageStatus).to.be.equal(true);
         })
     });
 
@@ -102,7 +106,7 @@ describe('The Home page', () => {
 
     });
 
-    it('Navigate to the expected page on clicking the navigation', () => {
+    it('Navigate to the expected page on clicking the links', () => {
         cy.get('@menu')
             .and('not.have.class', 'active')
             .click();
