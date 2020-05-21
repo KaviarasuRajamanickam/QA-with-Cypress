@@ -43,9 +43,6 @@ describe('The Home page', () => {
         });
 
     });
-    -------------
-    ----------
-    -----
 )}
 ```
 
@@ -82,9 +79,6 @@ describe('Checking the Events', () => {
             expect(eventStatus).to.be.equal(true);
         })
     })
-    -------------
-    ----------
-    -----
 )}
 ```
 
