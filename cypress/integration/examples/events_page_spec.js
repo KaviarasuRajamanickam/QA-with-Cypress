@@ -6,7 +6,7 @@ describe('Checking the Events', () => {
         cy.get('.res-events').as('eventList');
     })
 
-    /*To get the event date from the string*/
+    /* To get the event date from the string */
     const getNewDate = (eventDate) => {
         let trimDate = eventDate.substring(0, eventDate.indexOf('|')).replace(/\s/g, '').replace('.', ',').toLowerCase();
         let splitDate = trimDate.split(',');
@@ -29,7 +29,7 @@ describe('Checking the Events', () => {
         return {minDate, maxDate};
     }
     
-    /*To get the current date*/
+    /* To get the current date */
     let date  = new Date(),
     currDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
     eventStatus = true;

@@ -16,48 +16,36 @@ Automated test cases for website [Hobsons.com](https://www.hobsons.com/)
 ### Home_page_spec.js
 
 - Assert the page loads successfully with correct title
-- Ensure that all images load without failing
-- Assert the logo should be visible
-- Ensure the page title to be expected
 - Check the page scroll to correct position at specific viewport
 - Expect the list of drop downs are available on clicking the hamburger menu
 - Navigate to the expected page on clicking the links
+- Ensure that all images load without failing
+- Assert the logo should be visible
+- Ensure the banner title to be expected
 
 ```shell
 describe('The Home page', () => {
-    let imageStatus = true;
-    it('Ensure that all images load without failing', () => {
-        cy.get('img').each((img) => {
-            try {
-                expect(img[0].naturalWidth).to.not.equal(0)
-            } catch (error) {
-                imageStatus = false;                             
-            }
-        })
-        .then(() => {
-            expect(imageStatus).to.be.equal(true);
-        })
+    it('Assert the page loads successfully with correct title', function () {
+        cy.title().should('be.equal', 'Education Advances | Hobsons');
     });
 
-    it('Navigate to the expected page on clicking the links', () => {
-        cy.get('@menu')
-            .and('not.have.class', 'active')
-            .click();
+    it('Check the page scroll to correct position at specific viewport', () => {
+        cy.viewport(1366, 768);
 
-        cy.get('@navList')
-            .eq(3)
-            .contains('Resources')
-            .click();
+        cy.get('.home-more').click();
 
-        cy.get('@navList')
-            .eq(3)
-            .find('li')
-            .eq(2)
-            .contains('Events')
-            .click();
+        cy.get('.learn-more-wrapper')
+            .scrollIntoView()
+            .should('be.visible');
 
-        cy.url().should('include', '/resources/events');
-    })
+        cy.window().then(($window) => {
+            expect($window.scrollY).to.be.closeTo(700, 100);
+        });
+
+    });
+    -------------
+    ----------
+    -----
 )}
 ```
 
@@ -94,6 +82,9 @@ describe('Checking the Events', () => {
             expect(eventStatus).to.be.equal(true);
         })
     })
+    -------------
+    ----------
+    -----
 )}
 ```
 

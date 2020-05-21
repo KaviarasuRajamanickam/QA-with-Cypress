@@ -6,38 +6,13 @@ describe('The Home page', () => {
         cy.get('.nav > ul > li').as('navList');
         cy.get('.nav').as('nav');
         cy.get('.menu').as('menu');
-        cy.get('#logo').as('logo');
     });
 
-    const primaryNav = ['Solutions', 'Services', 'Resources', 'About', 'Blog'];
+    const primaryNav = ['Home', 'Solutions', 'Services', 'Resources', 'Careers', 'About', 'Blog'];
     const secondaryNav = ['All', 'Webinars', 'Events', 'Case Studies', 'White Papers', 'Blog', 'Media', 'Podcast'];
 
     it('Assert the page loads successfully with correct title', function () {
         cy.title().should('be.equal', 'Education Advances | Hobsons');
-    });
-
-    let imageStatus = true;
-    it('Ensure that all images load without failing', () => {
-        cy.get('img').each((img) => {
-            try {
-                expect(img[0].naturalWidth).to.not.equal(0)
-            } catch (error) {
-                imageStatus = false;                             
-            }
-        })
-        .then(() => {
-            expect(imageStatus).to.be.equal(true);
-        })
-    });
-
-    it('Assert the logo should be visible', function () {
-        cy.get('@logo')
-            .should('be.visible')
-            .and('have.css', 'background-image', 'url("https://www.hobsons.com/ui/svg/logo-hobsons-tagline.svg")');
-    });
-
-    it('Ensure the page title to be expected', () => {
-        cy.get('h1').should('contain', 'We help students across the journey of a lifetime.');
     });
 
     it('Check the page scroll to correct position at specific viewport', () => {
@@ -126,3 +101,34 @@ describe('The Home page', () => {
         cy.url().should('include', '/resources/events');
     });
 });
+
+describe('The Home page - Value added test cases', () => {
+    beforeEach(() => {
+        cy.visit('/');
+        cy.get('#logo').as('logo');
+    });
+    
+    let imageStatus = true;
+    it('Ensure that all images load without failing', () => {
+        cy.get('img').each((img) => {
+            try {
+                expect(img[0].naturalWidth).to.not.equal(0)
+            } catch (error) {
+                imageStatus = false;                             
+            }
+        })
+        .then(() => {
+            expect(imageStatus).to.be.equal(true);
+        })
+    });
+
+    it('Assert the logo should be visible', function () {
+        cy.get('@logo')
+            .should('be.visible')
+            .and('have.css', 'background-image', 'url("https://www.hobsons.com/ui/svg/logo-hobsons-tagline.svg")');
+    });
+
+    it('Ensure the banner title to be expected', () => {
+        cy.get('h1').should('contain', 'We help students across the journey of a lifetime.');
+    });
+})
