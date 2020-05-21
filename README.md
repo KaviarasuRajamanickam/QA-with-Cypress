@@ -18,10 +18,13 @@ Automated test cases for website [Hobsons.com](https://www.hobsons.com/)
 - Assert the page loads successfully with correct title
 - Check the page scroll to correct position at specific viewport
 - Expect the list of drop downs are available on clicking the hamburger menu
-- Navigate to the expected page on clicking the links
+
+#### Additional Validations
+
 - Ensure that all images load without failing
 - Assert the logo should be visible
 - Ensure the banner title to be expected
+- Assert if the hamburger menus when clicked gets navigated to their appropriate pages
 
 ```shell
 describe('The Home page', () => {

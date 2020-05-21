@@ -79,33 +79,15 @@ describe('The Home page', () => {
             .should('not.be.visible')
             .and('not.have.class', 'visible');
 
-    });
-
-    it('Navigate to the expected page on clicking the links', () => {
-        cy.get('@menu')
-            .and('not.have.class', 'active')
-            .click();
-
-        cy.get('@navList')
-            .eq(3)
-            .contains('Resources')
-            .click();
-
-        cy.get('@navList')
-            .eq(3)
-            .find('li')
-            .eq(2)
-            .contains('Events')
-            .click();
-
-        cy.url().should('include', '/resources/events');
-    });
+    });   
 });
 
-describe('The Home page - Value added test cases', () => {
+describe('The Home page - Additional Validations', () => {
     beforeEach(() => {
         cy.visit('/');
         cy.get('#logo').as('logo');
+        cy.get('.nav > ul > li').as('navList');
+        cy.get('.menu').as('menu');
     });
     
     let imageStatus = true;
@@ -130,5 +112,25 @@ describe('The Home page - Value added test cases', () => {
 
     it('Ensure the banner title to be expected', () => {
         cy.get('h1').should('contain', 'We help students across the journey of a lifetime.');
+    });
+
+    it('Navigate to the expected page on clicking the links', () => {
+        cy.get('@menu')
+            .and('not.have.class', 'active')
+            .click();
+
+        cy.get('@navList')
+            .eq(3)
+            .contains('Resources')
+            .click();
+
+        cy.get('@navList')
+            .eq(3)
+            .find('li')
+            .eq(2)
+            .contains('Events')
+            .click();
+
+        cy.url().should('include', '/resources/events');
     });
 })
