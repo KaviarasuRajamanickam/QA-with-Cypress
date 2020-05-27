@@ -8,7 +8,7 @@ describe('The Home page', () => {
         cy.get('.menu').as('menu');
     });
 
-    const primaryNav = ['Home', 'Solutions', 'Services', 'Resources', 'Careers', 'About', 'Blog'];
+    const primaryNav = ['Home', 'Solutions', 'Services', 'Resources', 'Careers', 'About', 'Blog', 'Get Started'];
     const secondaryNav = ['All', 'Webinars', 'Events', 'Case Studies', 'White Papers', 'Blog', 'Media', 'Podcast'];
 
     it('Assert the page loads successfully with correct title', function () {
@@ -48,8 +48,16 @@ describe('The Home page', () => {
             .should('be.visible')
             .and('have.class', 'visible');
 
-        primaryNav.forEach((item) => {
-            cy.get('@nav').contains(item);
+        let navStatus = true;
+        cy.get('.nav > ul > li > a').each((item, i) => {
+            try {
+                expect(item).to.have.text(primaryNav[i]); 
+            } catch (error) {
+                navStatus = false;                             
+            }
+        })
+        .then(() => {
+            expect(navStatus).to.be.equal(true);
         })
 
         cy.get('@navList')
@@ -57,11 +65,16 @@ describe('The Home page', () => {
             .contains('Resources')
             .click();
 
-        secondaryNav.forEach((item) => {
-            cy.get('@navList')
-                .eq(3)
-                .find('li')
-                .contains(item);
+        let subnavStatus = true;
+        cy.get('.nav > ul > li:nth-child(4) > ul > li > a').each((item, i) => {
+            try {
+                expect(item).to.have.text(secondaryNav[i]); 
+            } catch (error) {
+                subnavStatus = false;                             
+            }
+        })
+        .then(() => {
+            expect(subnavStatus).to.be.equal(true);
         })
 
         cy.get('@navList')
@@ -69,7 +82,8 @@ describe('The Home page', () => {
             .find('li')
             .should('have.length', 8)
             .eq(2)
-            .contains('Events');
+            .find('a')
+            .should('have.text', 'Events')
 
         cy.get('@menu')
             .and('have.class', 'active')
